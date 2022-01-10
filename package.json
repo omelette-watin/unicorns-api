@@ -9,5 +9,11 @@
   },
   "keywords": [],
   "author": "Nabil AINAS, Stéphane BAMAN, Mehdi BELLAM, Pierre-Nicolas WATIN-AUGOUARD",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.6.0",
+    "eslint-config-prettier": "^8.3.0",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.5.1"
+  }
 }
