@@ -1,5 +1,4 @@
 const mongoose = require("mongoose")
-const { now } = require("mongoose")
 
 // Report schema for development
 const reportSchema  = new mongoose.Schema({
@@ -16,7 +15,6 @@ const reportSchema  = new mongoose.Schema({
   publicationDate: {
     type: Date,
     required: true,
-    default: now(),
   }
 })
 
