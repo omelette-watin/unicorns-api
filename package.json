@@ -1,0 +1,13 @@
+{
+  "name": "unicorns-api",
+  "version": "1.0.0",
+  "description": "Unicorn's Blog Platform API ",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "Nabil AINAS, Stéphane BAMAN, Mehdi BELLAM, Pierre-Nicolas WATIN-AUGOUARD",
+  "license": "ISC"
+}
