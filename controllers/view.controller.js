@@ -8,7 +8,7 @@ exports.getSiteViews = async (req, res) => {
 
   try {
 
-    const views = await View.countDocuments({ "postAuthorId": { $exist: false } })
+    const views = await View.countDocuments({ postAuthorId: { $exist: false } })
 
     return res.status(200).json({
       views
