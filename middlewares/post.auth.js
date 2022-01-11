@@ -3,6 +3,7 @@ const User = require("../models/User")
 const Post = require("../models/Post")
 
 const SECRET_KEY = process.env.SECRET_KEY || "mySecretKey"
+const SECRET_ORIGIN_KEY = process.env.SECRET_ORIGIN_KEY || "originSecretKey"
 
 exports.canCreatePost = async (req, res, next) => {
   const token = req.headers["x-access-token"]
@@ -121,4 +122,22 @@ exports.canDeleteThisPost = async (req, res, next) => {
   }
 }
 
-// TODO canAddView method
+exports.canAddView =async (req, res, next) => {
+  const origin = req.headers["origin-secret-validator"]
+
+  try {
+
+    if (origin !== SECRET_ORIGIN_KEY) return res.status(401).json({
+      message: "Vous ne pouvez pas ajouter de vues manuellement",
+    })
+
+    next()
+
+  } catch (e) {
+
+    return res.status(500).json({
+      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
+    })
+
+  }
+}

@@ -23,7 +23,7 @@ router.post("/publish", auth.canCreatePost, postController.createAndPublishPost)
 // Updating
 router.put("/publish/:id", auth.canUpdateThisPost, postController.publishPost)
 router.put("/:id", auth.canUpdateThisPost, postController.updatePost)
-router.put("/view/:id", postController.addView)
+router.put("/view/:id", auth.canAddView, postController.addView)
 
 // Deleting
 router.delete("/:id", auth.canDeleteThisPost, postController.deletePost)
