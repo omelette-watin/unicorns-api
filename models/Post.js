@@ -27,16 +27,16 @@ const postSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  creationDate: {
+  createdAt: {
     type: Date,
     required: true,
     trim: true
   },
-  publicationDate: {
+  publishedAt: {
     type: Date,
     required: false,
   },
-  modificationDate: {
+  modifiedAt: {
     type: Date,
     required: false,
   },

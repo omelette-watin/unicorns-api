@@ -22,11 +22,11 @@ const commentSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
-  publicationDate: {
+  createdAt: {
     type: Date,
     required: true,
   },
-  modificationDate: {
+  modifiedAt: {
     type: Date,
     required: false,
   }

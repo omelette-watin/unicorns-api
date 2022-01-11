@@ -12,7 +12,7 @@ const reportSchema  = new mongoose.Schema({
     required: false,
     trim: true,
   },
-  publicationDate: {
+  createdAt: {
     type: Date,
     required: true,
   }
