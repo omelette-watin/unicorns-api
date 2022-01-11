@@ -305,31 +305,6 @@ exports.updatePost = async (req, res) => {
   }
 }
 
-exports.addView = async (req, res) => {
-  const { id } = req.params
-
-  try {
-
-    const post = await Post.findOneAndUpdate(
-      { _id: id, isPublished: true },
-      { $inc: { views: 1 }}
-    )
-
-    if (!post) return res.status(404).json({
-      message: "Cet article n'existe pas"
-    })
-
-    return res.status(200)
-
-  } catch (e) {
-
-    return res.status(500).json({
-      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
-    })
-
-  }
-}
-
 exports.deletePost = async (req, res) => {
   const { id } = req.params
 

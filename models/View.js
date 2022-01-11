@@ -7,6 +7,11 @@ const viewSchema = new mongoose.Schema({
     required: false,
     trim: true,
   },
+  postAuthorId: {
+    type: String,
+    required: false,
+    trim: true,
+  },
   createdAt: {
     type: Date,
     required: true,
