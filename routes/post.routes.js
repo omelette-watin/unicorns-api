@@ -1,5 +1,6 @@
 const express = require("express")
 const postController = require("../controllers/post.controller")
+const auth = require("../middlewares/post.auth")
 
 const router = express.Router()
 
@@ -11,19 +12,20 @@ router.get("/count", postController.countAllPublishedPosts)
 router.get("/", postController.getAllPublishedPosts)
 router.get("/ids", postController.getAllPublishedPostsIds)
 router.get("/:id", postController.getPublishedPostById)
+router.get("/saved/:id", auth.canUpdateThisPost, postController.getSavedPostById)
 router.get("/user/:id", postController.getPublishedPostsByUserId)
-router.get("/user/saved/:id", postController.getSavedPostsByUserId)
+router.get("/user/saved/:id", auth.canSeeTheirSavedPosts, postController.getSavedPostsByUserId)
 
 // Creating
-router.post("/", postController.createPost)
-router.post("/publish", postController.createAndPublishPost)
+router.post("/", auth.canCreatePost, postController.createPost)
+router.post("/publish", auth.canCreatePost, postController.createAndPublishPost)
 
 // Updating
-router.put("/publish/:id", postController.publishPost)
-router.put("/:id", postController.updatePost)
+router.put("/publish/:id", auth.canUpdateThisPost, postController.publishPost)
+router.put("/:id", auth.canUpdateThisPost, postController.updatePost)
 router.put("/view/:id", postController.addView)
 
 // Deleting
-router.delete("/:id", postController.deletePost)
+router.delete("/:id", auth.canDeleteThisPost, postController.deletePost)
 
 module.exports = router

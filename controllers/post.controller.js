@@ -165,6 +165,31 @@ exports.getPublishedPostById = async (req, res) => {
   }
 }
 
+exports.getSavedPostById = async (req, res) => {
+  const { id } = req.params
+
+  try {
+
+    const post = await Post.findOne({ _id: id, isPublished: false })
+
+    if (!post) return res.status(404).json({
+      message: "Ce brouillon n'existe pas"
+    })
+
+    return res.status(200).json({
+      post
+    })
+
+  } catch (e) {
+
+    return res.status(500).json({
+      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
+    })
+
+  }
+}
+
+
 
 exports.createPost = async (req, res) => {
   const { title, content, category } = req.body
