@@ -11,6 +11,61 @@ const userExistByUsername = async (username) => {
 }
 
 
+exports.countAllUsers = async (req, res) => {
+  try {
+
+    const count = await User.countDocuments({})
+
+    return res.status(200).json({
+      count
+    })
+
+  } catch (e) {
+
+    return res.status(500).json({
+      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
+    })
+
+  }
+}
+
+exports.countAuthors = async (req, res) => {
+  try {
+
+    const count = await User.countDocuments({ role: "author" })
+
+    return res.status(200).json({
+      count
+    })
+
+  } catch (e) {
+
+    return res.status(500).json({
+      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
+    })
+
+  }
+}
+
+exports.countAdmins = async (req, res) => {
+  try {
+
+    const count = await User.countDocuments({ role: "admin" })
+
+    return res.status(200).json({
+      count
+    })
+
+  } catch (e) {
+
+    return res.status(500).json({
+      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
+    })
+
+  }
+}
+
+
 exports.getAllUsers = async (req, res) => {
   const page = parseInt(req.query.page) || 1
   const limit = parseInt(req.query.limit) || 10
@@ -203,60 +258,6 @@ exports.searchUser = async (req, res) => {
   }
 }
 
-
-exports.countAllUsers = async (req, res) => {
-  try {
-
-    const count = await User.countDocuments({})
-
-    return res.status(200).json({
-      count
-    })
-
-  } catch (e) {
-
-    return res.status(500).json({
-      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
-    })
-
-  }
-}
-
-exports.countAuthors = async (req, res) => {
-  try {
-
-    const count = await User.countDocuments({ role: "author" })
-
-    return res.status(200).json({
-      count
-    })
-
-  } catch (e) {
-
-    return res.status(500).json({
-      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
-    })
-
-  }
-}
-
-exports.countAdmins = async (req, res) => {
-  try {
-
-    const count = await User.countDocuments({ role: "admin" })
-
-    return res.status(200).json({
-      count
-    })
-
-  } catch (e) {
-
-    return res.status(500).json({
-      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
-    })
-
-  }
-}
 
 // to be modified
 exports.updateUser = async (req, res) => {

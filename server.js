@@ -5,6 +5,7 @@ const pkg = require("./package.json")
 
 const authRoutes = require("./routes/auth.routes")
 const userRoutes = require("./routes/user.routes")
+const postRoutes = require("./routes/post.routes")
 
 const port = process.env.PORT || 8080
 
@@ -29,6 +30,7 @@ server.use(cors({
 // Routes
 server.use("/auth", authRoutes)
 server.use("/users", userRoutes)
+server.use("/posts", postRoutes)
 
 server.get("/", (req, res) => {
 
