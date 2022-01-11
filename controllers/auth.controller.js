@@ -12,9 +12,10 @@ const userExistByUsername = async (username) => {
   return User.findOne({ username: username })
 }
 
+
 exports.signUp = async (req, res) => {
   const { username, email, password } = req.body
-  const validEmailRegex = new RegExp(/^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$/)
+  const validEmailRegex = new RegExp(/^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/)
 
   try {
 
@@ -23,15 +24,15 @@ exports.signUp = async (req, res) => {
     })
 
     if (!validEmailRegex.test(email)) return res.status(400).json({
-      message: "L'adresse e-mail est invalide",
+      message: "Cette adresse e-mail est invalide",
     })
 
     if (await userExistByEmail(email)) return res.status(401).json({
-      message: "L'adresse e-mail est déjà utilisée",
+      message: "Cette adresse e-mail est déjà utilisée",
     })
 
     if (await userExistByUsername(username)) return res.status(401).json({
-      message: "Le nom d'utilisateur est déjà utilisé",
+      message: "Ce nom d'utilisateur est déjà utilisé",
     })
 
     const newUser = new User({

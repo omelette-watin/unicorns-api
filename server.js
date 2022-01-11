@@ -4,6 +4,7 @@ const mongoose = require("./config/database")
 const pkg = require("./package.json")
 
 const authRoutes = require("./routes/auth.routes")
+const userRoutes = require("./routes/user.routes")
 
 const port = process.env.PORT || 8080
 
@@ -27,6 +28,7 @@ server.use(cors({
 
 // Routes
 server.use("/auth", authRoutes)
+server.use("/users", userRoutes)
 
 server.get("/", (req, res) => {
 
