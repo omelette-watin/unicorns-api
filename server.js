@@ -1,6 +1,7 @@
 const express = require("express")
-const pkg = require("./package.json")
 const cors = require("cors")
+const mongoose = require("./config/database")
+const pkg = require("./package.json")
 
 const authRoutes = require("./routes/auth.routes")
 
@@ -9,7 +10,9 @@ const port = process.env.PORT || 8080
 const server = express()
 
 // DB Settings
-
+mongoose.connection.on("error", e => {
+  console.log(e)
+})
 
 // Settings
 server.set("pkg", pkg)
