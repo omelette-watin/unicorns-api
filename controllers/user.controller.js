@@ -259,7 +259,6 @@ exports.searchUser = async (req, res) => {
 }
 
 
-// TODO modify updateUser method
 exports.updateUser = async (req, res) => {
   const { id } = req.params
   const { username, email, password } = req.body
@@ -267,22 +266,27 @@ exports.updateUser = async (req, res) => {
 
 
   try {
+    const userToBeUpdated = await User.findById(id)
+
+    if (!userToBeUpdated) return res.status(404).json({
+      message: "Cet id ne correspond à aucun utilisateur",
+    })
 
     if (!validEmailRegex.test(email)) return res.status(400).json({
       message: "Cette adresse e-mail est invalide",
     })
 
-    if (await userExistByEmail(email) && user.email !== email) return res.status(401).json({
+    if (await userExistByEmail(email) && userToBeUpdated.email !== email) return res.status(401).json({
       message: "Cette adresse e-mail est déjà utilisée"
     })
 
-    if (await userExistByUsername(username) && user.username !== username) return res.status(401).json({
+    if (await userExistByUsername(username) && userToBeUpdated.username !== username) return res.status(401).json({
       message: "Ce nom d'utilisateur est déjà utilisé"
     })
 
     const user = await User.findByIdAndUpdate(id, {
       username: username,
-      email: email || user.email,
+      email: email,
       password: await User.hashPassword(password),
     })
 
