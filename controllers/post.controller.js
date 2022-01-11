@@ -48,7 +48,6 @@ exports.getAllPublishedPosts = async (req, res) => {
   try {
 
     const posts = await Post.find({ isPublished: true })
-      .select({ password : 0, email: 0 })
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip(skipIndex)
@@ -83,7 +82,6 @@ exports.getPublishedPostsByUserId = async (req, res) => {
   try {
 
     const posts = await Post.find({ authorId: id, isPublished: true})
-      .select({ password : 0, email: 0 })
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip(skipIndex)
@@ -118,7 +116,6 @@ exports.getSavedPostsByUserId = async (req, res) => {
   try {
 
     const posts = await Post.find({ authorId: id, isPublished: false })
-      .select({ password : 0, email: 0 })
       .sort({ createdAt: -1 })
       .limit(limit)
       .skip(skipIndex)
