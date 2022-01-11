@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 
-const connectionString = "mongodb://localhost/unicorn"
+const connectionString = process.env.DB_URI || "mongodb://localhost/unicorn"
 
 mongoose.connect(connectionString)
   .catch(e => console.log(e))
