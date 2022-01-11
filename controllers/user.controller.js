@@ -259,7 +259,7 @@ exports.searchUser = async (req, res) => {
 }
 
 
-// to be modified
+// TODO modify updateUser method
 exports.updateUser = async (req, res) => {
   const { id } = req.params
   const { username, email, password } = req.body

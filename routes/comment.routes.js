@@ -1,5 +1,6 @@
 const express = require("express")
 const commentController = require("../controllers/comment.controller")
+const auth = require("../middlewares/comment.auth")
 
 const router = express.Router()
 
@@ -14,12 +15,12 @@ router.get("/user/:id", commentController.getCommentsByUserId)
 router.get("/:id", commentController.getCommentById)
 
 // Creating
-router.post("/:id", commentController.createComment)
+router.post("/:id", auth.canCreatePost, commentController.createComment)
 
 // Updating
-router.put("/:id", commentController.updateComment)
+router.put("/:id", auth.canUpdateThisComment, commentController.updateComment)
 
 // Deleting
-router.delete("/:id", commentController.deleteComment)
+router.delete("/:id", auth.canDeleteThisComment, commentController.deleteComment)
 
 module.exports = router
