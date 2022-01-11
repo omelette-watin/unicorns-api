@@ -1,5 +1,6 @@
 const express = require("express")
 const userController = require("../controllers/user.controller")
+const auth = require("../middlewares/user.auth")
 
 const router = express.Router()
 
@@ -18,13 +19,13 @@ router.get("/search", userController.searchUser)
 router.get("/:id", userController.getUserById)
 
 // Updating
-router.put("/:id", userController.updateUser) // needs to be modified
-router.put("/author/:id", userController.promoteUserToAuthor)
-router.put("/admin/:id", userController.promoteUserToAdmin)
-router.put("/deactivate/:id", userController.deactivateUser)
-router.put("/activate/:id", userController.activateUser)
+router.put("/:id", auth.canUpdateThisUser, userController.updateUser) // needs to be modified
+router.put("/author/:id", auth.canChangeRights, userController.promoteUserToAuthor)
+router.put("/admin/:id", auth.canChangeRights, userController.promoteUserToAdmin)
+router.put("/deactivate/:id", auth.canChangeRights, userController.deactivateUser)
+router.put("/activate/:id", auth.canChangeRights, userController.activateUser)
 
 // Deleting
-router.delete("/:id", userController.deleteUser)
+router.delete("/:id", auth.canDeleteThisUser, userController.deleteUser)
 
 module.exports = router
