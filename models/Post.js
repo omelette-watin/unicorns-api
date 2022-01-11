@@ -12,6 +12,7 @@ const postSchema = new mongoose.Schema({
     required: true,
     trim: true,
   },
+  category: [String],
   isPublished: {
     type: Boolean,
     required: true,

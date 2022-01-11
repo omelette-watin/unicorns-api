@@ -170,13 +170,14 @@ exports.getPublishedPostById = async (req, res) => {
 
 
 exports.createPost = async (req, res) => {
-  const { title, content } = req.body
+  const { title, content, category } = req.body
 
   try {
 
     const post = new Post({
       title,
       content,
+      category: category,
       createdAt: now(),
       authorId: req.userId,
       authorName: req.username
@@ -199,13 +200,14 @@ exports.createPost = async (req, res) => {
 }
 
 exports.createAndPublishPost = async (req, res) => {
-  const { title, content } = req.body
+  const { title, content, category } = req.body
 
   try {
 
     const post = new Post({
       title,
       content,
+      category: category,
       createdAt: now(),
       authorId: req.userId,
       authorName: req.username,
@@ -257,11 +259,11 @@ exports.publishPost = async (req, res) => {
 
 exports.updatePost = async (req, res) => {
   const { id } = req.params
-  const { title, content } = req.body
+  const { title, content, category } = req.body
 
   try {
 
-    const post = await Post.findByIdAndUpdate(id, { title, content, modificationDate: now() })
+    const post = await Post.findByIdAndUpdate(id, { title, content, category, modificationDate: now() })
 
     if (!post) return res.status(404).json({
       message: "Cet article n'existe pas"

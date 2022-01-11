@@ -3,6 +3,7 @@ const postController = require("../controllers/post.controller")
 
 const router = express.Router()
 
+
 // Counting
 router.get("/count", postController.countAllPublishedPosts)
 
