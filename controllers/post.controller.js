@@ -310,7 +310,7 @@ exports.addView = async (req, res) => {
 
   try {
 
-    const post = await Post.findByOneAndUpdate(
+    const post = await Post.findOneAndUpdate(
       { _id: id, isPublished: true },
       { $inc: { views: 1 }}
     )
