@@ -42,13 +42,16 @@ exports.getAllPublishedPostsIds = async (req, res) => {
 
 exports.getAllPublishedPosts = async (req, res) => {
   const page = parseInt(req.query.page) || 1
-  const limit = parseInt(req.query.limit) || 10
+  const limit = parseInt(req.query.limit) || 5
   const skipIndex = (page - 1) * limit
+  const order = req.query.order || "latest"
+  const search = req.query.q || ""
+
 
   try {
 
-    const posts = await Post.find({ isPublished: true })
-      .sort({ createdAt: -1 })
+    const posts = await Post.find({ isPublished: true, title: { $regex: `${search}` } })
+      .sort({ createdAt: (order === "latest") ? -1 : 1 })
       .limit(limit)
       .skip(skipIndex)
 
@@ -112,11 +115,12 @@ exports.getSavedPostsByUserId = async (req, res) => {
   const page = parseInt(req.query.page) || 1
   const limit = parseInt(req.query.limit) || 10
   const skipIndex = (page - 1) * limit
+  const order = req.query.order || "latest"
 
   try {
 
     const posts = await Post.find({ authorId: id, isPublished: false })
-      .sort({ createdAt: -1 })
+      .sort({ createdAt: (order === "latest") ? -1 : 1 })
       .limit(limit)
       .skip(skipIndex)
 
@@ -188,8 +192,6 @@ exports.getSavedPostById = async (req, res) => {
 
   }
 }
-
-
 
 exports.createPost = async (req, res) => {
   const { title, content, category } = req.body
@@ -277,7 +279,6 @@ exports.publishPost = async (req, res) => {
 
   }
 }
-
 
 exports.updatePost = async (req, res) => {
   const { id } = req.params
