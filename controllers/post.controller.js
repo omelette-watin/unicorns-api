@@ -47,7 +47,6 @@ exports.getAllPublishedPosts = async (req, res) => {
   const order = req.query.order || "latest"
   const search = req.query.q || ""
 
-
   try {
 
     const posts = await Post.find({ isPublished: true, title: { "$regex": `${search}`, "$options" : "i" } })
@@ -55,7 +54,7 @@ exports.getAllPublishedPosts = async (req, res) => {
       .limit(limit)
       .skip(skipIndex)
 
-    const totalCount = await Post.countDocuments({ isPublished: true })
+    const totalCount = await Post.countDocuments({ isPublished: true, title: { "$regex": `${search}`, "$options" : "i" } })
 
     return res.status(200).json({
       meta: {
