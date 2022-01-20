@@ -50,7 +50,7 @@ exports.getAllPublishedPosts = async (req, res) => {
 
   try {
 
-    const posts = await Post.find({ isPublished: true, title: { $regex: `${search}` } })
+    const posts = await Post.find({ isPublished: true, title: { "$regex": `${search}`, "$options" : "i" } })
       .sort({ createdAt: (order === "latest") ? -1 : 1 })
       .limit(limit)
       .skip(skipIndex)
