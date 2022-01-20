@@ -21,7 +21,6 @@ exports.countAllPublishedPosts = async (req, res) => {
   }
 }
 
-
 exports.getAllPublishedPostsIds = async (req, res) => {
   try {
 
@@ -46,15 +45,25 @@ exports.getAllPublishedPosts = async (req, res) => {
   const skipIndex = (page - 1) * limit
   const order = req.query.order || "latest"
   const search = req.query.q || ""
+  const category = req.query.category || ""
 
   try {
 
-    const posts = await Post.find({ isPublished: true, title: { "$regex": `${search}`, "$options" : "i" } })
+    const posts = await Post.find(
+      {
+        isPublished: true,
+        title: { "$regex": `${search}`, "$options": "i" },
+        category: { "$regex": `${category}`, "$options": "i" }
+      })
       .sort({ createdAt: (order === "latest") ? -1 : 1 })
       .limit(limit)
       .skip(skipIndex)
 
-    const totalCount = await Post.countDocuments({ isPublished: true, title: { "$regex": `${search}`, "$options" : "i" } })
+    const totalCount = await Post.countDocuments({
+      isPublished: true,
+      title: { "$regex": `${search}`, "$options" : "i" },
+      category: { "$regex": `${category}`, "$options": "i" }
+    })
 
     return res.status(200).json({
       meta: {
