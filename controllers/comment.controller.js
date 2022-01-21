@@ -171,7 +171,7 @@ exports.createComment = async (req, res) => {
   const { content } = req.body
 
   try {
-    const post = await Post.findOne({ _id: id, isPublished: true })
+    const post = await Post.findOneAndUpdate({ _id: id, isPublished: true }, { $inc: { comments: 1 } })
 
     if (!post) return res.status(404).json({
       message: "Cet article n'existe pas"
@@ -239,6 +239,8 @@ exports.deleteComment = async (req, res) => {
     if (!comment) return res.status(404).json({
       message: "Ce commentaire n'existe pas"
     })
+
+    await Post.findOneAndUpdate({ _id: comment.postId, isPublished: true}, { $inc: { comments: -1 }})
 
     return res.status(200).json({
       message: "Ce commentaire a bien été supprimé",
