@@ -146,14 +146,14 @@ exports.getCommentById = async (req, res) => {
 
   try {
 
-    const comments = await Comment.findById(id)
+    const comment = await Comment.findById(id)
 
-    if (!comments) return res.status(404).json({
+    if (!comment) return res.status(404).json({
       message: "Ce commentaire n'existe pas"
     })
 
     return res.status(200).json({
-      comments
+      comment
     })
 
   } catch (e) {
