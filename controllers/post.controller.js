@@ -21,6 +21,33 @@ exports.countAllPublishedPosts = async (req, res) => {
   }
 }
 
+exports.getRandomPost = async (req, res) => {
+  try {
+    const ids = await Post.find({ isPublished: true }).select({ _id: 1 })
+
+    const randomIndex = Math.floor(Math.random() * (ids.length))
+
+    const randomId = ids[randomIndex]._id
+
+    const randomPost = await Post.findOne({ _id: randomId, isPublished: true })
+
+    if (!randomPost) return res.status(404).json({
+      message: "Cet article n'existe pas"
+    })
+
+    return res.status(200).json({
+      randomPost
+    })
+
+  } catch (e) {
+
+    return res.status(500).json({
+      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
+    })
+
+  }
+}
+
 exports.getAllPublishedPostsIds = async (req, res) => {
   try {
 

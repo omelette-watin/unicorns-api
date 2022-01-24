@@ -17,6 +17,7 @@ router.get("/saved/:id", auth.canUpdateThisPost, postController.getSavedPostById
 router.get("/user/:id", postController.getPublishedPostsByUserId)
 router.get("/user/saved/:id", auth.canSeeTheirSavedPosts, postController.getSavedPostsByUserId)
 
+
 // Creating
 router.post("/", auth.canCreatePost, postController.createPost)
 router.post("/publish", auth.canCreatePost, postController.createAndPublishPost)
