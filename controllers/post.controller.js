@@ -84,6 +84,31 @@ exports.getAllPublishedPosts = async (req, res) => {
   }
 }
 
+exports.getRandomPost = async (req, res) => {
+  try {
+    const ids = await Post.find({ isPublished: true }).select({ _id: 1 })
+
+    const randomId = Math.floor(Math.random() * (ids.length - 0 + 1))
+
+    const randomPost = await Post.findOne({ _id: randomId, isPublished: true })
+
+    if (!randomPost) return res.status(404).json({
+      message: "Cet article n'existe pas"
+    })
+
+    return res.status(200).json({
+      randomPost
+    })
+
+  } catch (e) {
+
+    return res.status(500).json({
+      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
+    })
+
+  }
+}
+
 exports.getPublishedPostsByUserId = async (req, res) => {
   const { id } = req.params
   const page = parseInt(req.query.page) || 1
