@@ -88,7 +88,9 @@ exports.getRandomPost = async (req, res) => {
   try {
     const ids = await Post.find({ isPublished: true }).select({ _id: 1 })
 
-    const randomId = Math.floor(Math.random() * (ids.length - 0 + 1))
+    const randomIndex = Math.floor(Math.random() * (ids.length - 0 + 1))
+    
+    const randomId = ids[randomIndex]._id
 
     const randomPost = await Post.findOne({ _id: randomId, isPublished: true })
 
