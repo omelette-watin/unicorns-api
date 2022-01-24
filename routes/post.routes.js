@@ -11,6 +11,7 @@ router.get("/count", postController.countAllPublishedPosts)
 // Retrieving
 router.get("/", postController.getAllPublishedPosts)
 router.get("/ids", postController.getAllPublishedPostsIds)
+router.get("/random", postController.getRandomPost)
 router.get("/:id", postController.getPublishedPostById)
 router.get("/saved/:id", auth.canUpdateThisPost, postController.getSavedPostById)
 router.get("/user/:id", postController.getPublishedPostsByUserId)
