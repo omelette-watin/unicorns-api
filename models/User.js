@@ -34,6 +34,7 @@ const userSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  favs: [String],
 })
 
 // Hash password
