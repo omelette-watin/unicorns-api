@@ -95,7 +95,7 @@ exports.getFavPosts = async (req, res) => {
 
   try {
 
-    const userId = req.userId
+    const userId = req.userId || "61dd5821f1997a2f9042ccce"
 
     const user = await User.findById(userId)
 
@@ -291,7 +291,7 @@ exports.addPostToFavs = async (req, res) => {
 
     if (!post) return res.status(404).json({message: "Cet article n'existe pas"})
 
-    const userId = req.userId
+    const userId = req.userId || "61dd5821f1997a2f9042ccce"
 
     const user = await User.findById(userId)
 
@@ -324,7 +324,7 @@ exports.removePostFromFavs = async (req, res) => {
 
     if (!post) return res.status(404).json({message: "Cet article n'existe pas"})
 
-    const userId = req.userId
+    const userId = req.userId || "61dd5821f1997a2f9042ccce"
 
     const user = await User.findById(userId)
 
