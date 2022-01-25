@@ -85,59 +85,6 @@ exports.getAllPublishedPosts = async (req, res) => {
   }
 }
 
-exports.getFavPosts = async (req, res) => {
-  const page = parseInt(req.query.page) || 1
-  const limit = parseInt(req.query.limit) || 5
-  const skipIndex = (page - 1) * limit
-  const order = req.query.order || "latest"
-  const search = req.query.q || ""
-  const category = req.query.category || ""
-
-  try {
-
-    const userId = req.userId || "61dd5821f1997a2f9042ccce"
-
-    const user = await User.findById(userId)
-
-    const userFavs = user.favs
-
-    const posts = await Post.find(
-      {
-        isPublished: true,
-        title: { "$regex": `${search}`, "$options": "i" },
-        category: { "$regex": `${category}`, "$options": "i" },
-        _id: { $in: userFavs }
-      })
-      .sort({ createdAt: (order === "latest") ? -1 : 1 })
-      .limit(limit)
-      .skip(skipIndex)
-
-    const totalCount = await Post.countDocuments({
-      isPublished: true,
-      title: { "$regex": `${search}`, "$options" : "i" },
-      category: { "$regex": `${category}`, "$options": "i" },
-      _id: { $in: userFavs }
-    })
-
-    return res.status(200).json({
-      meta: {
-        totalCount,
-        pageCount: Math.ceil(totalCount / limit),
-        currentPage: page,
-        perPage: limit
-      },
-      result: posts
-    })
-
-  } catch (e) {
-
-    return res.status(500).json({
-      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
-    })
-
-  }
-}
-
 exports.getRandomPost = async (req, res) => {
   try {
     const ids = await Post.find({ isPublished: true }).select({ _id: 1 })
@@ -279,7 +226,7 @@ exports.getFavPosts = async (req, res) => {
         isPublished: true,
         title: { "$regex": `${search}`, "$options": "i" },
         category: { "$regex": `${category}`, "$options": "i" },
-        _id: { $in: userFavs }
+        _id: userFavs
       })
       .sort({ createdAt: (order === "latest") ? -1 : 1 })
       .limit(limit)
@@ -289,7 +236,7 @@ exports.getFavPosts = async (req, res) => {
       isPublished: true,
       title: { "$regex": `${search}`, "$options" : "i" },
       category: { "$regex": `${category}`, "$options": "i" },
-      _id: { $in: userFavs }
+      _id: userFavs
     })
 
     return res.status(200).json({
