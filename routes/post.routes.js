@@ -3,7 +3,7 @@ const postController = require("../controllers/post.controller")
 const auth = require("../middlewares/post.auth")
 
 const router = express.Router()
-
+router.get("/favs", postController.getFavPosts)
 
 // Counting
 router.get("/count", postController.countAllPublishedPosts)
