@@ -47,16 +47,37 @@ exports.getAllPublishedPosts = async (req, res) => {
   const order = req.query.order || "latest"
   const search = req.query.q || ""
   const category = req.query.category || ""
+  const views = req.query.views || ""
+  const comments = req.query.comments || ""
 
   try {
 
+    let sort = { createdAt: (order === "latest") ?  - 1 : 1}
+
+    if (views && comments) {
+      sort = {
+        views: - 1,
+        comments: - 1,
+        createdAt: (order === "latest") ?  - 1 : 1
+      }
+    } else if (views && !comments) {
+      sort = {
+        views: - 1,
+        createdAt: (order === "latest") ?  - 1 : 1
+      }
+    } else if (!views && comments) {
+      sort = {
+        comments: - 1,
+        createdAt: (order === "latest") ?  - 1 : 1
+      }
+    }
     const posts = await Post.find(
       {
         isPublished: true,
         title: { "$regex": `${search}`, "$options": "i" },
         category: { "$regex": `${category}`, "$options": "i" }
       })
-      .sort({ createdAt: (order === "latest") ? -1 : 1 })
+      .sort(sort)
       .limit(limit)
       .skip(skipIndex)
 
