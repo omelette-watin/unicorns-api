@@ -290,7 +290,7 @@ exports.addPostToFavs = async (req, res) => {
       message: "Cet article n'existe pas"
     })
 
-    const userId = req.userId || "61eafecd3e9376a79e562f02"
+    const userId = req.userId
 
     const user = await User.findById(userId)
 
@@ -324,7 +324,7 @@ exports.addPostToFavs = async (req, res) => {
       message: "Cet article n'existe pas"
     })
 
-    const userId = req.userId || "61eafecd3e9376a79e562f02"
+    const userId = req.userId
 
     const user = await User.findById(userId)
 

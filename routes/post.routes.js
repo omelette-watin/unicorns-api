@@ -16,7 +16,7 @@ router.get("/:id", postController.getPublishedPostById)
 router.get("/saved/:id", auth.canUpdateThisPost, postController.getSavedPostById)
 router.get("/user/:id", postController.getPublishedPostsByUserId)
 router.get("/user/saved/:id", auth.canSeeTheirSavedPosts, postController.getSavedPostsByUserId)
-router.get("/favs", postController.getFavPosts)
+router.get("/favs", auth.canFav, postController.getFavPosts)
 
 // Creating
 router.post("/", auth.canCreatePost, postController.createPost)
@@ -25,10 +25,10 @@ router.post("/publish", auth.canCreatePost, postController.createAndPublishPost)
 // Updating
 router.put("/publish/:id", auth.canUpdateThisPost, postController.publishPost)
 router.put("/:id", auth.canUpdateThisPost, postController.updatePost)
-router.put("/favs/:id", postController.addPostToFavs)
+router.put("/favs/:id", auth.canFav, postController.addPostToFavs)
 
 // Deleting
 router.delete("/:id", auth.canDeleteThisPost, postController.deletePost)
-router.delete("/favs/:id", postController.removePostFromFavs)
+router.delete("/favs/:id", auth.canFav, postController.removePostFromFavs)
 
 module.exports = router

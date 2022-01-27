@@ -121,3 +121,30 @@ exports.canDeleteThisPost = async (req, res, next) => {
   }
 }
 
+exports.canFav = async (req, res, next) => {
+  const token = req.headers["x-access-token"]
+
+  try {
+
+    if (!token) return res.status(401).json({
+      message: "Veuillez fournir un token d'identification"
+    })
+
+    req.userId = jwt.verify(token, SECRET_KEY).id
+
+    const user = await User.findById(req.userId)
+
+    if (!user) return res.status(401).json({
+      message: "Token invalide"
+    })
+
+    next()
+
+  } catch (e) {
+
+    return res.status(500).json({
+      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
+    })
+
+  }
+}
