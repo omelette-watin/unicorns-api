@@ -1,6 +1,7 @@
 const Post = require("../models/Post")
 const Comment = require("../models/Comment")
 const User = require("../models/User")
+const Views = require("../models/View")
 const { now } = require("mongoose")
 
 
@@ -498,6 +499,7 @@ exports.deletePost = async (req, res) => {
     })
 
     await Comment.deleteMany({ postId: id })
+    await Views.deleteMany({ postId: id })
 
     return res.status(200).json({
       message: "Cet article a bien été supprimé",
