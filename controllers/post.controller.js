@@ -296,39 +296,9 @@ exports.addPostToFavs = async (req, res) => {
 
     const userFavs = user.favs.slice()
 
-    userFavs.push(id)
-
-    await User.updateOne({ _id: userId }, { favs: userFavs })
-
-    return res.status(200).json({
+    if (userFavs.includes(id)) return res.status(200).json({
       message: "L'article a bien été ajouté aux favoris",
     })
-
-  } catch (e) {
-
-    return res.status(500).json({
-      message: e.message || "Oups il y a eu une erreur veuillez réessayer plus tard",
-    })
-
-  }
-}
-
-exports.addPostToFavs = async (req, res) => {
-  const { id } = req.params
-
-  try {
-
-    const post = await Post.findOne({ _id: id, isPublished: true })
-
-    if (!post) return res.status(404).json({
-      message: "Cet article n'existe pas"
-    })
-
-    const userId = req.userId
-
-    const user = await User.findById(userId)
-
-    const userFavs = user.favs.slice()
 
     userFavs.push(id)
 
