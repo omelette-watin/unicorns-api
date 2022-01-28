@@ -5,7 +5,7 @@ const Comment = require("../models/Comment")
 
 const SECRET_KEY = process.env.SECRET_KEY || "mySecretKey"
 
-exports.canCreatePost = async (req, res, next) => {
+exports.canCreateComment = async (req, res, next) => {
   const token = req.headers["x-access-token"]
 
   try {

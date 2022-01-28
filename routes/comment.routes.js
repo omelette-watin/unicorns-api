@@ -15,7 +15,7 @@ router.get("/user/:id", commentController.getCommentsByUserId)
 router.get("/:id", commentController.getCommentById)
 
 // Creating
-router.post("/:id", auth.canCreatePost, commentController.createComment)
+router.post("/:id", auth.canCreateComment, commentController.createComment)
 
 // Updating
 router.put("/:id", auth.canUpdateThisComment, commentController.updateComment)

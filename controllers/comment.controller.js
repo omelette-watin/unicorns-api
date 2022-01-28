@@ -21,7 +21,6 @@ exports.countAllComments = async (req, res) => {
   }
 }
 
-
 exports.getAllCommentsIds = async (req, res) => {
   try {
 
@@ -165,7 +164,6 @@ exports.getCommentById = async (req, res) => {
   }
 }
 
-
 exports.createComment = async (req, res) => {
   const { id } = req.params
   const { content } = req.body
@@ -201,7 +199,6 @@ exports.createComment = async (req, res) => {
   }
 }
 
-
 exports.updateComment = async (req, res) => {
   const { id } = req.params
   const { content } = req.body
@@ -227,7 +224,6 @@ exports.updateComment = async (req, res) => {
 
   }
 }
-
 
 exports.deleteComment = async (req, res) => {
   const { id } = req.params
