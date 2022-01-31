@@ -175,7 +175,7 @@ exports.getAdmins = async (req, res) => {
 
   try {
 
-    const users = await User.find({ role: "admins" })
+    const users = await User.find({ role: "admin" })
       .select({ password : 0, email: 0 })
       .sort({ createdAt: -1 })
       .limit(limit)
