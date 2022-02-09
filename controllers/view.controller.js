@@ -25,14 +25,14 @@ exports.getSiteViews = async (req, res) => {
 
 exports.getViewsByAuthorId = async (req, res) => {
   const { id } = req.params
-  const { month } = req.query
+  const { month, year } = req.query
 
   try {
-    const sort = month ? {
+    const sort = (month && year) ? {
       postAuthorId: id,
       createdAt: {
-        $gte: new Date(`${new Date().getFullYear()}-${month}-01`),
-        $lte: new Date(`${new Date().getFullYear()}-${month}-31`),
+        $gte: new Date(`${year}-${month}-01`),
+        $lte: new Date(`${year}-${month}-31`),
       }
     } : { postAuthorId: id }
 
