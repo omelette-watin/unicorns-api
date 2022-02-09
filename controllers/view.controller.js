@@ -9,11 +9,12 @@ exports.getSiteViews = async (req, res) => {
 
   try {
     const sort = (month && year) ? {
+      postAuthorId: { $exists: false },
       createdAt: {
         $gte: new Date(`${year}-${month}-01`),
         $lte: new Date(`${year}-${month}-31`),
       }
-    } : null
+    } : { postAuthorId: { $exists: false } }
 
     const views = await View.countDocuments(sort)
 
