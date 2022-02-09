@@ -467,7 +467,7 @@ exports.updatePost = async (req, res) => {
 
   try {
 
-    const post = await Post.findByIdAndUpdate(id, { title, content, category, modificationDate: now() })
+    const post = await Post.findByIdAndUpdate(id, { title, content, category, modifiedAt: now() })
 
     if (!post) return res.status(404).json({
       message: "Cet article n'existe pas"

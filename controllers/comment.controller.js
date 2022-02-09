@@ -205,7 +205,7 @@ exports.updateComment = async (req, res) => {
 
   try {
 
-    const comment = await Comment.findByIdAndUpdate(id, { content, modificationDate: now() })
+    const comment = await Comment.findByIdAndUpdate(id, { content, modifiedAt: now() })
 
     if (!comment) return res.status(404).json({
       message: "Ce commentaire n'existe pas"
