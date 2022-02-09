@@ -5,9 +5,17 @@ const { now } = require("mongoose")
 const SECRET_ORIGIN_KEY = process.env.SECRET_ORIGIN_KEY || "originSecretKey"
 
 exports.getSiteViews = async (req, res) => {
-  try {
+  const { month, year } = req.query
 
-    const views = await View.countDocuments()
+  try {
+    const sort = (month && year) ? {
+      createdAt: {
+        $gte: new Date(`${year}-${month}-01`),
+        $lte: new Date(`${year}-${month}-31`),
+      }
+    } : null
+
+    const views = await View.countDocuments(sort)
 
     return res.status(200).json({
       views,
