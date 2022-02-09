@@ -25,10 +25,19 @@ exports.getSiteViews = async (req, res) => {
 
 exports.getViewsByAuthorId = async (req, res) => {
   const { id } = req.params
+  const { month } = req.query
 
   try {
 
-    const views = await View.countDocuments({ postAuthorId: id })
+    const sort = month ? {
+      postAuthorId: id,
+      createdAt: {
+        $gte: new Date(`${new Date().getFullYear()}-01-${month}`),
+        $lte: new Date(`${new Date().getFullYear()}-31-${month}`),
+      }
+    } : { postAuthorId: id }
+
+    const views = await View.countDocuments(sort)
 
     return res.status(200).json({
       views,
