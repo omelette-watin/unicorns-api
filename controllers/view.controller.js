@@ -28,12 +28,11 @@ exports.getViewsByAuthorId = async (req, res) => {
   const { month } = req.query
 
   try {
-
     const sort = month ? {
       postAuthorId: id,
       createdAt: {
-        $gte: new Date(`${new Date().getFullYear()}-01-${month}`),
-        $lte: new Date(`${new Date().getFullYear()}-31-${month}`),
+        $gte: new Date(`${new Date().getFullYear()}-${month}-01`),
+        $lte: new Date(`${new Date().getFullYear()}-${month}-31`),
       }
     } : { postAuthorId: id }
 
