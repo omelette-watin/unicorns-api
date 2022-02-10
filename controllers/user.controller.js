@@ -12,9 +12,17 @@ const userExistByUsername = async (username) => {
 
 
 exports.countAllUsers = async (req, res) => {
-  try {
+  const { month, year } = req.query
 
-    const count = await User.countDocuments({})
+  try {
+    const sort = (month && year) ? {
+      createdAt: {
+        $gte: new Date(`${year}-${month}-01`),
+        $lte: new Date(`${year}-${month}-31`),
+      }
+    } : {}
+
+    const count = await User.countDocuments(sort)
 
     return res.status(200).json({
       count
