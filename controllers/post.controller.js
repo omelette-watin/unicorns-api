@@ -75,8 +75,8 @@ exports.getAllPublishedPosts = async (req, res) => {
     const posts = await Post.find(
       {
         isPublished: true,
-        title: { "$regex": `${search.replace("%", " ")}`, "$options": "i" },
-        category: { "$regex": `${category.replace("%", " ")}`, "$options": "i" }
+        title: { "$regex": `${decodeURIComponent(search)}`, "$options": "i" },
+        category: { "$regex": `${decodeURIComponent(category)}`, "$options": "i" }
       })
       .sort(sort)
       .limit(limit)
@@ -84,8 +84,8 @@ exports.getAllPublishedPosts = async (req, res) => {
 
     const totalCount = await Post.countDocuments({
       isPublished: true,
-      title: { "$regex": `${search.replace("%", " ")}`, "$options" : "i" },
-      category: { "$regex": `${category.replace("%", " ")}`, "$options": "i" }
+      title: { "$regex": `${decodeURIComponent(search)}`, "$options" : "i" },
+      category: { "$regex": `${decodeURIComponent(category)}`, "$options": "i" }
     })
 
     return res.status(200).json({
